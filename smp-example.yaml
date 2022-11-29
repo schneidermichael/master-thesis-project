@@ -1,0 +1,15 @@
+smp_version: test_smp_version
+start_time: 2022-11-25T15:38:26.430225903Z
+end_time: 2022-11-25T15:38:56.432019514Z
+latencies_ms:
+  min: 0.000362112
+  average: 0.0016873921500000005
+  p50: 0.0008025584761904762
+  p90: 0.0016875000000000002
+  p99: 0.0502468552
+  max: 0.050617138
+actual_qps: 1.9998804330818847
+details_uri: test_details
+test_id: test_test_id
+mesh_config_id: test_meshconfigID
+env_id: test_envID

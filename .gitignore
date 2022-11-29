@@ -1,0 +1,4 @@
+
+.DS_Store
+**/.terraform/*
+provision-gke-cluster/.terraform.lock.hcl

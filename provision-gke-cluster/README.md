@@ -1,5 +1,9 @@
 ## Create a GKE cluster with 3 nodes
 
+### Initialize Google Cloud Platform
+1. `gcloud init`
+2. `gcloud auth application-default login`
+
 ### Getting started
 1. Initialize your Terraform workspace with `terraform init` - once only
 2. Apply the configuration with `terraform apply`
