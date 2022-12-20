@@ -3,5 +3,4 @@
 **/.terraform/*
 provision-gke-cluster/.terraform.lock.hcl
 
-linkerd
 consul
