@@ -32,6 +32,10 @@ istioctl analyze -n microservices
 kubectl create namespace telemetry
 ```
 
+```
+kubectl create namespace gui
+```
+
 ## Prometheus
 ```
 kubectl apply -f prometheus.yaml -n telemetry
@@ -39,7 +43,7 @@ kubectl apply -f prometheus.yaml -n telemetry
 
 ## Kiali
 ```
-kubectl apply -f kiali.yaml
+kubectl apply -f kiali.yaml -n gui
 ```
 
 Access the Kiali dashboard
