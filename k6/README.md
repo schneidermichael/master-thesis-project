@@ -1,5 +1,11 @@
 # Load testing
 
+## Use case local
+Running a 30-seconds, 10-VU load test
+```
+k6 run ./load-testing/use-case-local.js
+```
+
 ## Use case 1
 Running a 10-min, 10-VU load test
 ```
