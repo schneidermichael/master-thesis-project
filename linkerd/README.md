@@ -14,11 +14,9 @@ linkerd install --crds | kubectl apply -f -
 // Flag enables root privileges
 linkerd install --set proxyInit.runAsRoot=true | kubectl apply -f -
 ```
+
 ```
-kubectl create namespace microservices
-```
-```
-kubectl apply -f microservices-linkerd.yaml
+kubectl create namespace microservices | kubectl apply -f microservices-linkerd.yaml
 ```
 
 Forward frontend locally to port 8080

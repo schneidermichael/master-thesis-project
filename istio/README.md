@@ -3,16 +3,9 @@
 ```
 istioctl install --set profile=default -y
 ```
-```
-kubectl create namespace microservices
-```
 
 ```
-kubectl label namespace microservices istio-injection=enabled
-```
-
-```
-kubectl apply -f microservices-istio.yaml
+kubectl create namespace microservices | kubectl label namespace microservices istio-injection=enabled | kubectl apply -f microservices-istio.yaml
 ```
 
 Forward frontend locally to port 8080
