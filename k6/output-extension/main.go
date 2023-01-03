@@ -3,7 +3,9 @@ package log
 import (
 	"fmt"
 	"io"
+	"math"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -17,6 +19,7 @@ import (
 var requests int = 0
 var startTime time.Time
 var stopTime time.Time
+var latencies []float64
 
 type LatencyStruct struct {
 	Min     float64 `yaml:"min"`
@@ -80,7 +83,8 @@ func (l *Logger) AddMetricSamples(samples []metrics.SampleContainer) {
 
 	for _, sample := range samples {
 		all := sample.GetSamples()
-		fmt.Fprintf(l.out, "%s [%s]\n", all[0].GetTime().Format(time.RFC3339Nano), metricKeyValues(all))
+		// fmt.Fprintf(l.out, "%s [%s]\n", all[0].GetTime().Format(time.RFC3339Nano), metricKeyValues(all))
+		metricKeyValues(all)
 	}
 }
 
@@ -88,9 +92,12 @@ func (l *Logger) AddMetricSamples(samples []metrics.SampleContainer) {
 func metricKeyValues(samples []metrics.Sample) string {
 	names := make([]string, 0, len(samples))
 	for _, sample := range samples {
-		names = append(names, fmt.Sprintf("%s=%v", sample.Metric.Name, sample.Value))
+		// names = append(names, fmt.Sprintf("%s=%v", sample.Metric.Name, sample.Value))
 		if sample.Metric.Name == "iterations" {
 			requests++
+		}
+		if sample.Metric.Name == "http_req_duration" {
+			latencies = append(latencies, sample.Value)
 		}
 	}
 	return strings.Join(names, ", ")
@@ -100,14 +107,46 @@ func metricKeyValues(samples []metrics.Sample) string {
 func (*Logger) Stop() error {
 	stopTime = time.Now()
 	duration := stopTime.Sub(startTime)
-	createYamlFile(duration)
+	CreateYamlFile(duration)
 	return nil
 }
 
-func createYamlFile(duration time.Duration) {
+func LatenciesInMilliseconds(p90Indexlatencies []float64) (min float64, max float64, average float64, p50 float64, p90 float64, p99 float64) {
+	min = latencies[0]
+	max = latencies[0]
+	sum := 0.0
+	sort.Float64s(latencies)
+	for _, latency := range latencies {
+		if latency > max {
+			max = latency
+		}
+		if latency < min {
+			min = latency
+		}
+		sum += latency
+	}
+
+	p50Index := math.Round(0.5 * (float64)(len(latencies)))
+	p90Index := math.Round(0.9 * (float64)(len(latencies)))
+	p99Index := math.Round(0.99 * (float64)(len(latencies)))
+
+	if int(p90Index) == len(latencies) {
+		p90Index -= 1
+	}
+
+	if int(p99Index) == len(latencies) {
+		p99Index -= 1
+	}
+
+	return min, max, sum / (float64)(len(latencies)), latencies[int(p50Index)], latencies[int(p90Index)], latencies[int(p99Index)]
+}
+
+func CreateYamlFile(duration time.Duration) {
 
 	id := uuid.New()
 	requestsPerSeconds := float64(requests) / duration.Seconds()
+
+	min, max, average, p50, p90, p99 := LatenciesInMilliseconds(latencies)
 
 	smp := ServiceMeshPerformance{
 		Start_time:     startTime,
@@ -122,12 +161,12 @@ func createYamlFile(duration time.Duration) {
 			Connections: 1,
 			Rps:         requestsPerSeconds,
 			Latencies_ms: LatencyStruct{
-				Min:     0.00,
-				Average: 0.00,
-				P50:     0.00,
-				P90:     0.00,
-				P99:     0.00,
-				Max:     0.00,
+				Min:     min,
+				Average: average,
+				P50:     p50,
+				P90:     p90,
+				P99:     p99,
+				Max:     max,
 			},
 		},
 		Metrics: map[string]string{},
