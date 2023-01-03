@@ -38,12 +38,14 @@ type ClientStruct struct {
 }
 
 type ServiceMeshPerformance struct {
-	Exp_uuid       uuid.UUID    `yaml:"exp_uuid"`
-	Endpoint_url   string       `yaml:"endpoint_url"`
-	Load_generator string       `yaml:"load_generator"`
-	Env            EnvStruct    `yaml:"env"`
-	Client         ClientStruct `yaml:"client"`
-	Metrics        []string     `yaml:"metrics"`
+	Start_time     time.Time         `yaml:"start_time"`
+	End_time       time.Time         `yaml:"end_time"`
+	Exp_uuid       uuid.UUID         `yaml:"exp_uuid"`
+	Endpoint_url   string            `yaml:"endpoint_url"`
+	Load_generator string            `yaml:"load_generator"`
+	Env            EnvStruct         `yaml:"env"`
+	Client         ClientStruct      `yaml:"client"`
+	Metrics        map[string]string `yaml:"metrics"`
 }
 
 // init is called by the Go runtime at application startup.
@@ -108,6 +110,8 @@ func createYamlFile(duration time.Duration) {
 	requestsPerSeconds := float64(requests) / duration.Seconds()
 
 	smp := ServiceMeshPerformance{
+		Start_time:     startTime,
+		End_time:       stopTime,
 		Exp_uuid:       id,
 		Endpoint_url:   "http://localhost:8080",
 		Load_generator: "k6",
@@ -126,7 +130,7 @@ func createYamlFile(duration time.Duration) {
 				Max:     0.00,
 			},
 		},
-		Metrics: []string{},
+		Metrics: map[string]string{},
 	}
 
 	yamlData, err := yaml.Marshal(&smp)
