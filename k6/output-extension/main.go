@@ -15,6 +15,8 @@ import (
 )
 
 var requests int = 0
+var startTime time.Time
+var stopTime time.Time
 
 type LatencyStruct struct {
 	Min     float64 `yaml:"min"`
@@ -67,11 +69,13 @@ func (*Logger) Description() string {
 // Start initializes any state needed for the output, establishes network
 // connections, etc.
 func (o *Logger) Start() error {
+	startTime = time.Now()
 	return nil
 }
 
 // AddMetricSamples receives metric samples from the k6 Engine as they're emitted.
 func (l *Logger) AddMetricSamples(samples []metrics.SampleContainer) {
+
 	for _, sample := range samples {
 		all := sample.GetSamples()
 		fmt.Fprintf(l.out, "%s [%s]\n", all[0].GetTime().Format(time.RFC3339Nano), metricKeyValues(all))
@@ -83,21 +87,25 @@ func metricKeyValues(samples []metrics.Sample) string {
 	names := make([]string, 0, len(samples))
 	for _, sample := range samples {
 		names = append(names, fmt.Sprintf("%s=%v", sample.Metric.Name, sample.Value))
-		requests++
+		if sample.Metric.Name == "iterations" {
+			requests++
+		}
 	}
 	return strings.Join(names, ", ")
 }
 
 // Stop finalizes any tasks in progress, closes network connections, etc.
 func (*Logger) Stop() error {
-	createYamlFile()
-	fmt.Printf("Requests: %d", requests)
+	stopTime = time.Now()
+	duration := stopTime.Sub(startTime)
+	createYamlFile(duration)
 	return nil
 }
 
-func createYamlFile() {
+func createYamlFile(duration time.Duration) {
 
 	id := uuid.New()
+	requestsPerSeconds := float64(requests) / duration.Seconds()
 
 	smp := ServiceMeshPerformance{
 		Exp_uuid:       id,
@@ -108,7 +116,7 @@ func createYamlFile() {
 		},
 		Client: ClientStruct{
 			Connections: 1,
-			Rps:         0.00,
+			Rps:         requestsPerSeconds,
 			Latencies_ms: LatencyStruct{
 				Min:     0.00,
 				Average: 0.00,

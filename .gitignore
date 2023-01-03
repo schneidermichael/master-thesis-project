@@ -3,3 +3,4 @@
 **/.terraform/*
 provision-gke-cluster/.terraform.lock.hcl
 k6/output-extension/k6
+k6/output-extension/emojivoto.yml
