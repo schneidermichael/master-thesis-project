@@ -1,5 +1,10 @@
 # Load testing
 
+## Use case local with result output as CSV
+```
+k6 --out csv=test_results.csv run ./load-testing/use-case-local.js
+```
+
 ## Use case local
 Running a 30-seconds, 10-VU load test
 ```

@@ -4,3 +4,5 @@
 provision-gke-cluster/.terraform.lock.hcl
 k6/output-extension/k6
 k6/output-extension/emojivoto.yml
+k6/__pycache__/locustfile.cpython-37.pyc
+k6/locustfile.py
