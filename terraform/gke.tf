@@ -33,7 +33,9 @@ resource "google_container_cluster" "primary" {
       env = var.project_id
     }
     preemptible  = true
-    machine_type = "n1-standard-1"
+    disk_size_gb = 10
+    local_ssd_count = 0
+    machine_type = "n1-standard-2"
     tags         = ["gke-node", "${var.project_id}-gke"]
     metadata = {
       disable-legacy-endpoints = "true"
