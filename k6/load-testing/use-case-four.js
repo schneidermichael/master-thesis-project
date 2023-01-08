@@ -6,7 +6,7 @@ export const options = {
   duration: "600s",
 };
 
-const url = "http://localhost:8080";
+const url = "http://34.90.230.154";
 
 const products = [
   "0PUK6V6EV0",
