@@ -1,7 +1,7 @@
 # Deployment with Istio
 
 ```
-istioctl install --set profile=default -y
+istioctl install --set profile=minimal -y
 ```
 
 ```
