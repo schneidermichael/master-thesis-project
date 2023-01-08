@@ -6,7 +6,7 @@ export const options = {
   duration: "600s",
 };
 
-const url = "http://34.90.230.154";
+const url = "http://34.141.133.186";
 
 const products = [
   "0PUK6V6EV0",
