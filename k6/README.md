@@ -20,6 +20,7 @@ k6 --out csv=test_results_use_case_one_istio.csv run ./load-testing/use-case-one
 
 k6 --out csv=test_results_use_case_one_linkerd.csv run ./load-testing/use-case-one.js
 
+k6 --out csv=test_results_use_case_one_consul.csv run ./load-testing/use-case-one.js
 ```
 
 ## Use case 2
@@ -31,6 +32,7 @@ k6 --out csv=test_results_use_case_two_istio.csv run ./load-testing/use-case-two
 
 k6 --out csv=test_results_use_case_two_linkerd.csv run ./load-testing/use-case-two.js
 
+k6 --out csv=test_results_use_case_two_consul.csv run ./load-testing/use-case-two.js
 ```
 
 ## Use case 3
@@ -42,6 +44,7 @@ k6 --out csv=test_results_use_case_three_istio.csv run ./load-testing/use-case-t
 
 k6 --out csv=test_results_use_case_three_linkerd.csv run ./load-testing/use-case-three.js
 
+k6 --out csv=test_results_use_case_three_consul.csv run ./load-testing/use-case-three.js
 ```
 
 ## Use case 4
@@ -53,4 +56,5 @@ k6 --out csv=test_results_use_case_four_istio.csv run ./load-testing/use-case-fo
 
 k6 --out csv=test_results_use_case_four_linkerd.csv run ./load-testing/use-case-four.js
 
+k6 --out csv=test_results_use_case_four_consul.csv run ./load-testing/use-case-four.js
 ```

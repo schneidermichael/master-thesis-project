@@ -7,7 +7,7 @@ global:
     enableAgentMetrics: true
     agentMetricsRetentionTime: "1m"
 server:
-  replicas: 3
+  replicas: 1
 ui:
   enabled: true
   metrics:

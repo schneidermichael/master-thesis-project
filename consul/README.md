@@ -8,16 +8,13 @@ helm repo add hashicorp https://helm.releases.hashicorp.com
 helm install -f consul-values.yaml consul hashicorp/consul --create-namespace --namespace consul --version "0.43.0" 
 ```
 ```
-kubectl create namespace microservices
-
-kubectl apply -f microservices-consul.yaml
+kubectl create namespace microservices | kubectl apply -f microservices-consul.yaml
 ```
 
 Forward frontend locally to port 8080
 ```
 kubectl -n microservices port-forward deployment/frontend 8080:8080
 ```
-
 
 UI in Consul
 ```

@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
       labels:
         app: emailservice
     spec:
@@ -62,7 +62,7 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
       labels:
         app: checkoutservice
     spec:
@@ -120,7 +120,7 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
       labels:
         app: recommendationservice
     spec:
@@ -173,7 +173,8 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
+        consul.hashicorp.com/kubernetes-service: 'frontend'
       labels:
         app: frontend
     spec:
@@ -228,6 +229,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: frontend
+  namespace: microservices
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: frontend-external
   namespace: microservices
 spec:
@@ -236,7 +251,7 @@ spec:
     app: frontend
   ports:
   - name: http
-    port: 90
+    port: 80
     targetPort: 8080
 ---
 apiVersion: apps/v1
@@ -251,7 +266,7 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
       labels:
         app: paymentservice
     spec:
@@ -300,7 +315,7 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
       labels:
         app: productcatalogservice
     spec:
@@ -349,7 +364,7 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
       labels:
         app: cartservice
     spec:
@@ -399,7 +414,7 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
       labels:
         app: currencyservice
     spec:
@@ -449,7 +464,7 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
       labels:
         app: shippingservice
     spec:
@@ -498,7 +513,7 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
       labels:
         app: redis-cart
     spec:
@@ -548,7 +563,7 @@ spec:
   template:
     metadata:
       annotations:
-        'consul.hashicorp.com/connect-inject': 'true'
+        consul.hashicorp.com/connect-inject: 'true'
       labels:
         app: adservice
     spec:
@@ -586,3 +601,131 @@ spec:
   - name: grpc
     port: 9555
     targetPort: 9555
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: adservice
+spec:
+  sources:
+    - name: frontend
+      action: allow
+  destination:
+    name: adservice
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: recommendationservice
+spec:
+  sources:
+    - name: frontend
+      action: allow
+  destination:
+    name: recommendationservice
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: productcatalogservice
+spec:
+  sources:
+    - name: frontend
+      action: allow
+    - name: recommendationservice
+      action: allow
+    - name: checkoutservice
+      action: allow
+  destination:
+    name: productcatalogservice
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: cartservice
+spec:
+  sources:
+    - name: frontend
+      action: allow
+    - name: checkoutservice
+      action: allow
+  destination:
+    name: cartservice
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: redis-cart
+spec:
+  sources:
+    - name: frontend
+      action: allow
+    - name: cartservice
+      action: allow
+    - name: checkoutservice
+      action: allow
+  destination:
+    name: redis-cart
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: shippingservice
+spec:
+  sources:
+    - name: frontend
+      action: allow
+    - name: checkoutservice
+      action: allow
+  destination:
+    name: shippingservice
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: currencyservice
+spec:
+  sources:
+    - name: frontend
+      action: allow
+    - name: checkoutservice
+      action: allow
+  destination:
+    name: currencyservice
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: paymentservice
+spec:
+  sources:
+    - name: frontend
+      action: allow
+    - name: checkoutservice
+      action: allow
+  destination:
+    name: paymentservice
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: emailservice
+spec:
+  sources:
+    - name: frontend
+      action: allow
+    - name: checkoutservice
+      action: allow
+  destination:
+    name: emailservice
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: checkoutservice
+spec:
+  sources:
+    - name: frontend
+      action: allow
+  destination:
+    name: checkoutservice
