@@ -9,7 +9,9 @@ global:
 server:
   replicas: 3
 ui:
-  enabled: true
+  enabled: false
+  service:
+    type: LoadBalancer
   metrics:
     enabled: true
     provider: "prometheus"
