@@ -11,7 +11,6 @@
 4. You need to configure `kubectl` with `gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw zone)`
 5. Verify with `kubectl get all` the deployments/services are running
 
-
 ### Clean up your workspace
 
 1. Running `terraform destroy` will de-provision the deployments and services you have created
