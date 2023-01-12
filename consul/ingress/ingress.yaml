@@ -1,0 +1,39 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: ingress-consul
+# spec:
+#   rules:
+#   - http:
+#       paths:
+#         - path: /
+#           pathType: Prefix
+#           backend:
+#             service:
+#               name: frontend
+#               port: 
+#                 number: 80
+
+#Consul ingress
+
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: IngressGateway
+metadata:
+  name: ingress-consul
+spec:
+  listeners:
+    - port: 8080
+      protocol: http
+      services:
+        - name: frontend
+        
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: ingress-consul
+# spec:
+#   defaultBackend:
+#     service:
+#       name: frontend
+#       port:
+#         number: 8080

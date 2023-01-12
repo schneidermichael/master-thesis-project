@@ -8,8 +8,10 @@ global:
     agentMetricsRetentionTime: "1m"
 server:
   replicas: 3
+client:
+  enabled: true
 ui:
-  enabled: false
+  enabled: true
   service:
     type: LoadBalancer
   metrics:
@@ -24,3 +26,9 @@ connectInject:
     defaultEnableMerging: false
 controller:
   enabled: true
+ingressGateways:
+  enabled: true
+  gateways:
+    - name: ingress-consul
+      service:
+        type: LoadBalancer
