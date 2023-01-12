@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: emailservice
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -38,7 +37,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: emailservice
-  namespace: microservices
 spec:
   type: ClusterIP
   selector:
@@ -52,7 +50,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: checkoutservice
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -94,7 +91,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: checkoutservice
-  namespace: microservices
 spec:
   type: ClusterIP
   selector:
@@ -108,7 +104,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: recommendationservice
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -145,7 +140,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: recommendationservice
-  namespace: microservices
 spec:
   type: ClusterIP
   selector:
@@ -159,7 +153,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -220,22 +213,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
-  namespace: microservices
+  name: frontend 
 spec:
   type: ClusterIP
   selector:
     app: frontend
   ports:
   - name: http
-    port: 80
+    port: 8080
     targetPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: frontend-external
-  namespace: microservices
 spec:
   type: LoadBalancer
   selector:
@@ -249,7 +240,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: paymentservice
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -282,7 +272,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: paymentservice
-  namespace: microservices
 spec:
   type: ClusterIP
   selector:
@@ -296,7 +285,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: productcatalogservice
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -329,7 +317,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: productcatalogservice
-  namespace: microservices
 spec:
   type: ClusterIP
   selector:
@@ -343,7 +330,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartservice
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -377,7 +363,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cartservice
-  namespace: microservices
+  
 spec:
   type: ClusterIP
   selector:
@@ -391,7 +377,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: currencyservice
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -425,7 +410,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: currencyservice
-  namespace: microservices
 spec:
   type: ClusterIP
   selector:
@@ -439,7 +423,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: shippingservice
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -472,7 +455,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: shippingservice
-  namespace: microservices
 spec:
   type: ClusterIP
   selector:
@@ -486,7 +468,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-cart
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -520,7 +501,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis-cart
-  namespace: microservices
 spec:
   type: ClusterIP
   selector:
@@ -534,7 +514,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adservice
-  namespace: microservices
 spec:
   selector:
     matchLabels:
@@ -569,7 +548,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: adservice
-  namespace: microservices
 spec:
   type: ClusterIP
   selector:

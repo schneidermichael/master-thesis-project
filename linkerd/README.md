@@ -16,18 +16,18 @@ linkerd install --set proxyInit.runAsRoot=true | kubectl apply -f -
 ```
 
 ```
-kubectl create namespace microservices | kubectl apply -f microservices-linkerd.yaml
+kubectl apply -f microservices-linkerd.yaml
 ```
 
 Forward frontend locally to port 8080
 ```
-kubectl -n microservices port-forward deployment/frontend 8080:8080
+kubectl port-forward deployment/frontend 8080:8080
 ```
 
 Inject sidecars/proxies to Microservices application
 
 ```
-kubectl get -n microservices deploy -o yaml \
+kubectl get deploy -o yaml \
   | linkerd inject - \
   | kubectl apply -f -
 ```
