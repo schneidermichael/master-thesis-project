@@ -2,8 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: linkerd-ingress
-  # annotations:
-  #   kubernetes.io/ingress.class: "linkerd"
 spec:
   defaultBackend:
     service:
