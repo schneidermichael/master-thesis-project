@@ -6,7 +6,7 @@ export const options = {
   duration: "600s",
 };
 
-const url = "http://34.141.133.186";
+const url = "http://localhost:8080";
 
 const products = [
   "0PUK6V6EV0",
@@ -29,7 +29,7 @@ export default function () {
   addToCart();
   viewCart();
   checkout();
-  sleep(randomise(10));
+  sleep(randomise(0,10));
 }
 
 function index() {
@@ -37,22 +37,22 @@ function index() {
 }
 
 function setCurrency() {
-  let data = { currency_code: currencies[randomise(3)] };
+  let data = { currency_code: currencies[randomise(0,3)] };
 
   http.post(url + "/setCurrency", JSON.stringify(data));
 }
 
 function browseProduct() {
-  http.get(url + "/product/" + products[randomise(8)]);
+  http.get(url + "/product/" + products[randomise(0,8)]);
 }
 
 function addToCart() {
-  let product = products[randomise(8)];
+  let product = products[randomise(0,8)];
 
-  let data = { product_id: product, quantity: randomise(10) };
+  let data = { product_id: product, quantity: randomise(1,5) };
 
   http.get(url + "/product/" + product);
-  http.post(url + "/cart", JSON.stringify(data));
+  http.post(url + "/cart", data);
 }
 
 function viewCart() {
@@ -64,20 +64,23 @@ function checkout() {
 
   let data = {
     email: "master@stud.fh-campuswien.ac.at",
-    street_address: "Favoritenstraße 226",
+    street_address: "226 Favoritenstraße",
     zip_code: "94043",
-    city: "Vienna",
-    state: "Vienna",
-    country: "Austria",
-    credit_card_number: "2332-2015-6112-2374",
+    city: "Mountain",
+    state: "CA",
+    country: "United States",
+    credit_card_number: "4432-8015-6152-0454",
     credit_card_expiration_month: "7",
     credit_card_expiration_year: "2023",
-    credit_card_cvv: "183",
+    credit_card_cvv: "671",
   };
-
-  http.post(url + "/cart/checkout", JSON.stringify(data));
+  http.post(url + "/cart/checkout", data);
 }
 
-function randomise(parameter) {
-  return Math.random() * parameter;
+function randomise(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
 }
+
+
