@@ -5,7 +5,7 @@ export const options = {
   vus: 25,
   duration: "600s",
 };
-const url = "http://localhost:8080";
+const url = "http://34.102.130.42";
 
 const products = [
   "0PUK6V6EV0",

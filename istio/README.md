@@ -21,8 +21,10 @@ kubectl create namespace istio-system
 ```
 ### Install Charts
 ```
+//Version 1.16.1
 helm install istio-base istio/base -n istio-system
 
+//Version 1.16.1
 helm install istiod istio/istiod -n istio-system
 ```
 
