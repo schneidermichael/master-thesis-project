@@ -8,10 +8,15 @@ The  [/istio](https://github.com/schneidermichael/master-thesis-project/tree/mai
 The  [/linkerd](https://github.com/schneidermichael/master-thesis-project/tree/main/linkerd)
  folder contains instructions for using microservices + [Linkerd](https://linkerd.io/)
 
- # Microservice application + Consul
+ # Microservice application + Kuma
 
-The  [/consul](https://github.com/schneidermichael/master-thesis-project/tree/main/consul)
- folder contains instructions for using microservices + [Consul](https://www.consul.io/)
+The  [/kuma](https://github.com/schneidermichael/master-thesis-project/tree/main/kuma)
+ folder contains instructions for using microservices + [Kuma](https://kuma.io/)
+
+  # Microservice application + Traefik mesh
+
+The  [/traefik-mesh](https://github.com/schneidermichael/master-thesis-project/tree/main/traefik-mesh)
+ folder contains instructions for using microservices + [Linkerd](https://traefik.io/traefik-mesh/)
 
 # Use k6 to run load and stress tests
 
