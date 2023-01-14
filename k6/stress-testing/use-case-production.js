@@ -14,7 +14,7 @@ export const options = {
 export default function () {
   const BASE_URL = 'http://localhost:8080'; 
 
-  const responses = http.batch([
+  http.batch([
     ['GET', `${BASE_URL}/product/OLJCESPC7Z`],
     ['GET', `${BASE_URL}/product/66VCHSJNUP`],
     ['GET', `${BASE_URL}/product/2ZYFJ3GM2N`],
