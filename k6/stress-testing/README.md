@@ -9,7 +9,7 @@ Running a
 - 5 seconds, 500 VU load test
 
 ```
-k6 run use-case-local.js
+k6 run use-case-local.js ✅
 ```
 
 ## Use case production
@@ -23,11 +23,11 @@ Running a
 
 ### Istio
 ```
-k6 --out csv=test_results_use_case_production_istio.csv run use-case-production.js
+k6 --out csv=test_results_use_case_production_istio.csv run use-case-production.js 
 ```
 ### Linkerd
 ```
-k6 --out csv=test_results_use_case_production_linkerd.csv run use-case-production.js
+k6 --out csv=test_results_use_case_production_linkerd.csv run use-case-production.js ✅
 ```
 ### Kuma
 ```

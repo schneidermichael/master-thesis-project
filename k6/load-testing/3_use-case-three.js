@@ -6,7 +6,7 @@ export const options = {
   duration: "600s",
 };
 
-const url = "http://34.102.130.42";
+const BASE_URL = "http://34.110.162.125";
 
 const products = [
   "0PUK6V6EV0",
@@ -33,17 +33,17 @@ export default function () {
 }
 
 function index() {
-  http.get(url);
+  http.get(BASE_URL);
 }
 
 function setCurrency() {
   let data = { currency_code: currencies[randomise(0,3)] };
 
-  http.post(url + "/setCurrency", JSON.stringify(data));
+  http.post(BASE_URL + "/setCurrency", JSON.stringify(data));
 }
 
 function browseProduct() {
-  http.get(url + "/product/" + products[randomise(0,8)]);
+  http.get(BASE_URL + "/product/" + products[randomise(0,8)]);
 }
 
 function addToCart() {
@@ -51,12 +51,12 @@ function addToCart() {
 
   let data = { product_id: product, quantity: randomise(1,5) };
 
-  http.get(url + "/product/" + product);
-  http.post(url + "/cart", data);
+  http.get(BASE_URL + "/product/" + product);
+  http.post(BASE_URL + "/cart", data);
 }
 
 function viewCart() {
-  http.get(url + "/cart");
+  http.get(BASE_URL + "/cart");
 }
 
 function checkout() {
@@ -74,7 +74,7 @@ function checkout() {
     credit_card_expiration_year: "2023",
     credit_card_cvv: "671",
   };
-  http.post(url + "/cart/checkout", data);
+  http.post(BASE_URL + "/cart/checkout", data);
 }
 
 function randomise(min, max) {
@@ -82,5 +82,3 @@ function randomise(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min);
 }
-
-
