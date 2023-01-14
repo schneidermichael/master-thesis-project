@@ -2,10 +2,9 @@ import http from "k6/http";
 import { sleep } from "k6";
 
 export const options = {
-  vus: 150,
+  vus: 25,
   duration: "600s",
 };
-
 const url = "http://localhost:8080";
 
 const products = [
