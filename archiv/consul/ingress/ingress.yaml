@@ -19,7 +19,7 @@
 apiVersion: consul.hashicorp.com/v1alpha1
 kind: IngressGateway
 metadata:
-  name: ingress-consul
+  name: ingress-gateway
 spec:
   listeners:
     - port: 8080
@@ -30,10 +30,29 @@ spec:
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
 # metadata:
-#   name: ingress-consul
+#   name: ingress-gateway
 # spec:
 #   defaultBackend:
 #     service:
 #       name: frontend
 #       port:
 #         number: 8080
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: frontend
+#   annotations:
+#     kubernetes.io/ingress.class: kong
+#     konghq.com/preserve-host: "false"
+# spec:
+#   rules:
+#     - http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: frontend
+#                 port:
+#                   number: 8080

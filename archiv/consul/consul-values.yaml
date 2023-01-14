@@ -1,0 +1,52 @@
+# global:
+#   enabled: true
+#   name: consul
+#   datacenter: dc1
+#   metrics:
+#     enabled: true
+#     enableAgentMetrics: true
+#     agentMetricsRetentionTime: "1m"
+# server:
+#   replicas: 1
+# client:
+#   enabled: true
+#   grpc: true
+# ui:
+#   enabled: true
+#   service:
+#     type: LoadBalancer
+#   metrics:
+#     enabled: true
+#     provider: "prometheus"
+#     baseURL: http://prometheus-server.default.svc.cluster.local
+# connectInject:
+#   enabled: true
+#   default: true
+#   metrics:   
+#     defaultEnabled: true  
+#     defaultEnableMerging: false
+# controller:
+#   enabled: true
+# ingressGateways:
+#   enabled: true
+#   gateways:
+#     - name: ingress-consul
+#       service:
+#         type: LoadBalancer
+global:
+  name: consul
+client:
+  enabled: true
+  grpc: true
+ui:
+  enabled: true
+  service:
+    type: LoadBalancer
+connectInject:
+  enabled: true
+ingressGateways:
+  enabled: true
+  gateways:
+    - name: ingress-gateway
+      service:
+        type: LoadBalancer

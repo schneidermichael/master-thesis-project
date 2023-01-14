@@ -6,5 +6,5 @@ spec:
   destination:
     name: frontend
   sources:
-    - name: ingress-consul
+    - name: ingress-gateway
       action: allow

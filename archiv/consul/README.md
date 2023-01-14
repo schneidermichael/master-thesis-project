@@ -7,20 +7,25 @@ helm repo add hashicorp https://helm.releases.hashicorp.com
 ```
 helm install -f consul-values.yaml consul hashicorp/consul --create-namespace --namespace consul
 
-kubectl apply -f ingress.yaml
+kubectl apply -f microservices-consul.yaml
 
-kubectl apply -f service-defaults.yaml
+helm install example kong/kong --version 2.3.0 --values kong-values.yaml
+
+kubectl apply -f kong-service-default.yaml
+
+kubectl port-forward deployment/frontend 8080:8080
+
+kubectl apply -f ingress.yaml
 
 kubectl apply -f service-intentions.yaml
 ```
+
+
 Only for updating helm start
 ```
 helm upgrade --values consul-values.yaml consul hashicorp/consul --namespace consul
 ```
 
-```
-kubectl apply -f microservices-consul.yaml
-```
 
 Forward frontend locally to port 8080
 ```
