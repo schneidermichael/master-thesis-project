@@ -12,14 +12,14 @@ helm install --create-namespace --namespace kuma-system kuma kuma/kuma
 
 ## Deploy microservices with loadbalancer
 ```
-kubectl apply -f microservices-kuma.yaml
+kubectl apply -f loadbalancer/microservices-kuma.yaml
 ```
 
 ## Deploy microservices with ingress
 ```
-kubectl apply -f microservices-kuma.yaml
+kubectl apply -f ingress/microservices-kuma.yaml
 
-kubectl apply -f ingress.yaml
+kubectl apply -f ingress/ingress.yaml
 ```
 
 ## Kuma GUI
