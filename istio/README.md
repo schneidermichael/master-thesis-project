@@ -47,8 +47,6 @@ kubectl apply -f ingress/microservices-istio.yaml
 kubectl apply -f ingress/ingress.yaml
 ```
 
-
-
 ## Miscellaneous
 
 ### Forward frontend locally to port 8080 (only for local tests)

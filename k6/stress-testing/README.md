@@ -23,7 +23,7 @@ Running a
 
 ### Istio
 ```
-k6 --out csv=test_results_use_case_production_istio.csv run use-case-production.js 
+k6 --out csv=test_results_use_case_production_istio.csv run use-case-production.js ✅
 ```
 ### Linkerd
 ```
@@ -31,9 +31,9 @@ k6 --out csv=test_results_use_case_production_linkerd.csv run use-case-productio
 ```
 ### Kuma
 ```
-k6 --out csv=test_results_use_case_production_kuma.csv run use-case-production.js
+k6 --out csv=test_results_use_case_production_kuma.csv run use-case-production.js ✅
 ```
 ### Traefik Mesh
 ```
-k6 --out csv=test_results_use_case_production_traefik.csv run use-case-production.js
+k6 --out csv=test_results_use_case_production_traefik.csv run use-case-production.js ✅
 ```
