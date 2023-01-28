@@ -203,14 +203,8 @@ spec:
             value: "checkoutservice:5050"
           - name: AD_SERVICE_ADDR
             value: "adservice:9555"
-          # # ENV_PLATFORM: One of: local, gcp, aws, azure, onprem, alibaba
-          # # When not set, defaults to "local" unless running in GKE, otherwies auto-sets to gcp 
-          # - name: ENV_PLATFORM 
-          #   value: "aws"
           - name: ENABLE_PROFILER
             value: "0"
-          # - name: CYMBAL_BRANDING
-          #   value: "true"
 
 ---
 apiVersion: v1
@@ -541,7 +535,6 @@ spec:
         env:
         - name: PORT
           value: "9555"
-
         readinessProbe:
           initialDelaySeconds: 20
           periodSeconds: 15
