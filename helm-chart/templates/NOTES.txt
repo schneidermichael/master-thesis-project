@@ -1,5 +1,5 @@
 The Online Boutique microservice with 
 
-Service Mesh - {{- if .Values.sidecars.istio }}Istio{{- end}}{{- if .Values.sidecars.linkerd }}Linkerd{{- end}}{{- if .Values.sidecars.kuma }}Kuma{{- end}}{{- if .Values.sidecars.traefik }}Traefik Mesh{{- end}} 
+Service Mesh - {{- if .Values.sidecars.istio }} Istio{{- end}}{{- if .Values.sidecars.linkerd }} Linkerd{{- end}}{{- if .Values.sidecars.kuma }} Kuma{{- end}}{{- if .Values.sidecars.traefik }} Traefik Mesh{{- end}} 
 
 has been installed!
