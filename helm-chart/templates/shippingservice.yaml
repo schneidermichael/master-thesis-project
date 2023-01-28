@@ -16,6 +16,9 @@ spec:
       {{- end}}
       labels:
         app: shippingservice
+        {{- if .Values.sidecars.kuma }}
+        kuma.io/sidecar-injection: enabled
+        {{- end}}
     spec:
       serviceAccountName: default
       containers:

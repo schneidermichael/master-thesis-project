@@ -17,6 +17,9 @@ spec:
       {{- end}}
       labels:
         app: adservice
+        {{- if .Values.sidecars.kuma }}
+        kuma.io/sidecar-injection: enabled
+        {{- end}}
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5

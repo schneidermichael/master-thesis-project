@@ -12,6 +12,9 @@ spec:
     metadata:
       labels:
         app: frontend
+        {{- if .Values.sidecars.kuma }}
+        kuma.io/sidecar-injection: enabled
+        {{- end}}
       {{- if .Values.sidecars.istio }}   
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
