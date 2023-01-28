@@ -10,6 +10,10 @@ spec:
       app: currencyservice
   template:
     metadata:
+      {{- if .Values.sidecars.linkerd }}
+      annotations: 
+        linkerd.io/inject: enabled
+      {{- end}}
       labels:
         app: currencyservice
     spec:

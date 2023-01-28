@@ -1,12 +1,14 @@
 # Deployment with Linkerd
 
+# 1.Step
+
 ## Linkerd (Option 1)
 
 ### Validate Kubernetes cluster
 ```
 linkerd check --pre
 ```
-### Install Linkerd onto cluster
+### Install with linkerd command line tool onto cluster
 
 ```
 linkerd install --crds | kubectl apply -f -
@@ -36,6 +38,7 @@ helm repo add linkerd https://helm.linkerd.io/stable
 ```
 helm install linkerd-crds linkerd/linkerd-crds -n linkerd --create-namespace
 ```
+
 ### Install Linkerd control plane
 
 ```
@@ -46,9 +49,9 @@ helm install linkerd-control-plane -n linkerd \
   linkerd/linkerd-control-plane
 ```
 
-## Deploy microservices (Loadbalancer or ingress)
+# 2.Step
 
-#### Loadbalancer
+## Deploy microservices with loadbalancer (Option 1)
 ```
 kubectl apply -f loadbalancer/microservices-linkerd.yaml
 
@@ -57,7 +60,7 @@ kubectl get deploy -o yaml \
   | kubectl apply -f -
 ```
 
-### Ingress
+## Deploy microservices with ingress (Option 2)
 ```
 kubectl apply -f ingress/microservices-linkerd.yaml
 
@@ -68,6 +71,10 @@ kubectl get deploy -o yaml \
 kubectl apply -f ingress/ingress.yaml
 ```
 
+## Deploy microservices with ingress (Option 3)
+```
+helm install microservices ../helm-chart -f microservices-values.yaml 
+```
 ## Forward frontend locally to port 8080 (only for local tests)
 ```
 kubectl port-forward deployment/frontend 8080:8080

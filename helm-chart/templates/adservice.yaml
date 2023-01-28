@@ -4,12 +4,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adservice
+
 spec:
   selector:
     matchLabels:
       app: adservice
   template:
     metadata:
+      {{- if .Values.sidecars.linkerd }}
+      annotations: 
+        linkerd.io/inject: enabled
+      {{- end}}
       labels:
         app: adservice
     spec:

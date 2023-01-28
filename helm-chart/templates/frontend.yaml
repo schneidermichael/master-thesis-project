@@ -16,6 +16,10 @@ spec:
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
       {{- end}}
+      {{- if .Values.sidecars.linkerd }}
+      annotations: 
+        linkerd.io/inject: enabled
+      {{- end}}
     spec:
       serviceAccountName: default
       containers:

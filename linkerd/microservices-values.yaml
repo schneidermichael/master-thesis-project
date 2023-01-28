@@ -1,0 +1,39 @@
+adService:
+  create: true
+
+cartService:
+  create: true
+
+checkoutService:
+  create: true
+
+currencyService:
+  create: true
+
+emailService:
+  create: true
+
+frontend:
+  create: true
+  loadbalancer: true
+
+paymentService:
+  create: true
+
+productCatalogService:
+  create: true
+
+recommendationService:
+  create: true
+
+shippingService:
+  create: true
+
+cartDatabase:
+  create: true
+
+sidecars:
+  istio: false
+  linkerd: true
+  kuma: false
+  traefik: false
