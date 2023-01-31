@@ -43,3 +43,26 @@ kubectl port-forward deployment/frontend 8080:8080
 ```
 kubectl port-forward svc/kuma-control-plane -n kuma-system 5681:5681
 ```
+
+# Linkerd + HAProxy (Ingress)
+
+## Get Repo Info (required only once)
+```
+helm repo add haproxytech https://haproxytech.github.io/helm-charts
+```
+## Install Kuma Chart
+```
+helm install --create-namespace --namespace kuma-system kuma kuma/kuma
+```
+## Install HAProxy Chart
+```
+helm install kubernetes-ingress haproxytech/kubernetes-ingress --set controller.service.type=LoadBalancer
+```
+## Deploy microservices
+```
+kubectl apply -f ingress-haproxy/microservices-kuma.yaml
+```
+## Deploy ingress (Option 3)
+```
+kubectl apply -f ingress-haproxy/ingress-haproxy.yaml
+```

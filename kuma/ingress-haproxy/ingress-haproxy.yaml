@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: linkerd-ingress
+  name: kuma-ingress
   annotations:
     kubernetes.io/ingress.class: haproxy
     haproxy.org/request-set-header: |

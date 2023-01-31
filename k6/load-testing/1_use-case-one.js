@@ -5,6 +5,7 @@ export const options = {
   vus: 25,
   duration: "600s",
 };
+
 const BASE_URL = "http://35.204.76.115";
 
 const products = [
