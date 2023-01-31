@@ -9,6 +9,8 @@ spec:
       app: emailservice
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: emailservice
     spec:
@@ -56,6 +58,8 @@ spec:
       app: checkoutservice
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: checkoutservice
     spec:
@@ -110,6 +114,8 @@ spec:
       app: recommendationservice
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: recommendationservice
     spec:
@@ -159,6 +165,8 @@ spec:
       app: frontend
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: frontend
     spec:
@@ -246,6 +254,8 @@ spec:
       app: paymentservice
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: paymentservice
     spec:
@@ -291,6 +301,8 @@ spec:
       app: productcatalogservice
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: productcatalogservice
     spec:
@@ -336,6 +348,8 @@ spec:
       app: cartservice
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: cartservice
     spec:
@@ -383,6 +397,8 @@ spec:
       app: currencyservice
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: currencyservice
     spec:
@@ -429,6 +445,8 @@ spec:
       app: shippingservice
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: shippingservice
     spec:
@@ -474,6 +492,8 @@ spec:
       app: redis-cart
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: redis-cart
     spec:
@@ -520,6 +540,8 @@ spec:
       app: adservice
   template:
     metadata:
+      annotations: 
+        linkerd.io/inject: enabled
       labels:
         app: adservice
     spec:

@@ -6,7 +6,7 @@ export const options = {
   duration: "600s",
 };
 
-const BASE_URL = "http://35.244.226.230";
+const BASE_URL = "http://34.90.69.69";
 
 const products = [
   "0PUK6V6EV0",
