@@ -11,7 +11,7 @@ kubectl create namespace osm-system
 ```
 ## Resource limits (OSM specific)
 ```
-kubectl apply -f loadbalancer/limits.yaml
+kubectl apply -f limits.yaml
 ```
 ## Install Chart
 ```
@@ -21,17 +21,17 @@ helm install osm osm --repo https://openservicemesh.github.io/osm --namespace os
 ## Label namespace
 ```
 kubectl label namespace default openservicemesh.io/sidecar-injection=enabled openservicemesh.io/monitored-by=osm
+
 kubectl annotate namespace default openservicemesh.io/sidecar-injection=enabled
 ```
 
-## Deploy microservices
+### Deploy with helm (Option 3)
 ```
-kubectl apply -f loadbalancer/microservices-osm.yaml
+helm install microservices ../../helm-chart -f microservices-values.yaml  
 ```
-
-## Update Chart
+### Update Chart
 ```
-
+helm upgrade --values microservices-values.yaml microservices ../../helm-chart
 ```
 
 ## Forward frontend locally to port 8080 (only for local tests)

@@ -1,14 +1,3 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: osm-ingress
-spec:
-  defaultBackend:
-    service:
-      name: frontend
-      port:
-        number: 8080
----
 kind: IngressBackend
 apiVersion: policy.openservicemesh.io/v1alpha1
 metadata:

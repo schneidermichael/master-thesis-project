@@ -235,7 +235,7 @@ kind: Service
 metadata:
   name: frontend
 spec:
-  # type: NodePort
+  type: NodePort
   selector:
     app: frontend
   ports:

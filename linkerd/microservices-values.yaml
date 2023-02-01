@@ -16,6 +16,8 @@ emailService:
 frontend:
   create: true
   loadbalancer: true
+  ingress: false
+
 
 paymentService:
   create: true

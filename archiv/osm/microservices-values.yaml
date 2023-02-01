@@ -37,4 +37,5 @@ sidecars:
   istio: false
   linkerd: false
   kuma: false
-  traefik: true
+  traefik: false
+  osm: true
