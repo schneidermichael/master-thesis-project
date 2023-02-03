@@ -43,3 +43,27 @@ kubectl port-forward deployment/frontend 8080:8080
 ```
 helm upgrade --values traefik-values.yaml traefik-mesh traefik-mesh/traefik-mesh --namespace traefik
 ```
+
+# Traefik + HAProxy (Ingress)
+
+## Get Repo Info (required only once)
+```
+helm repo add haproxytech https://haproxytech.github.io/helm-charts
+```
+## Install HAProxy Chart
+```
+helm install kubernetes-ingress haproxytech/kubernetes-ingress --set controller.service.type=LoadBalancer
+```
+
+## Install Traefik Chart
+```
+helm install traefik-mesh traefik-mesh/traefik-mesh -f traefik-values.yaml --create-namespace --namespace traefik --set kubedns=true
+```
+
+## Deploy microservices
+```
+kubectl apply -f ingress/microservices-traefik-mesh.yaml
+```
+## Deploy ingress
+```
+kubectl apply -f ingress/ingress-haproxy.yaml
