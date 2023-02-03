@@ -16,14 +16,10 @@ istioctl install --set profile=minimal -y
 helm repo add istio https://istio-release.storage.googleapis.com/charts
 ```
 
-### Create namespace
-```
-kubectl create namespace istio-system
-```
 ### Install Charts
 ```
 //Version 1.16.1
-helm install istio-base istio/base -n istio-system
+helm install istio-base istio/base --create-namespace -n istio-system
 
 //Version 1.16.1
 helm install istiod istio/istiod -n istio-system
@@ -61,3 +57,27 @@ helm install microservices ../helm-chart -f microservices-values.yaml
 kubectl port-forward deployment/frontend 8080:8080
 ```
 
+# Istio + HAProxy (Ingress)
+
+## Get Repo Info (required only once)
+```
+helm repo add haproxytech https://haproxytech.github.io/helm-charts
+```
+## Install HAProxy Chart
+```
+helm install kubernetes-ingress haproxytech/kubernetes-ingress --set controller.service.type=LoadBalancer
+```
+## Install Istio
+```
+istioctl install --set profile=minimal -y
+```
+## Deploy microservices
+```
+kubectl label namespace default istio-injection=enabled
+
+kubectl apply -f ingress/microservices-istio.yaml
+```
+## Deploy ingress
+```
+kubectl apply -f ingress-haproxy/ingress-haproxy.yaml
+```
