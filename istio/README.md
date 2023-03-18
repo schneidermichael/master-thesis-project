@@ -27,9 +27,15 @@ helm install istiod istio/istiod -n istio-system
 
 # 2.Step
 
-### Label namespace
+### Label namespace (Option 1) 
 ```
 kubectl label namespace default istio-injection=enabled
+```
+
+### Label on Pod (Option 2)  - Deployment completed with this option
+
+```
+kubectl apply -f loadbalancer/microservices-istio-pod.yaml
 ```
 
 # 3.Step
@@ -41,7 +47,7 @@ kubectl apply -f loadbalancer/microservices-istio.yaml
 
 ### Deploy microservices with ingress (Option 2)
 ```
-kubectl apply -f ingress/microservices-istio.yaml
+kubectl apply -f ingress/microservices-istio-namespace.yaml
 
 kubectl apply -f ingress/ingress.yaml
 ```

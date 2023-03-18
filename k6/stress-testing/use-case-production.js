@@ -12,7 +12,7 @@ export const options = {
 };
 
 export default function () {
-  const BASE_URL = 'http://34.149.106.121'; 
+  const BASE_URL = 'http://35.204.123.81'; 
 
   http.batch([
     ['GET', `${BASE_URL}/product/OLJCESPC7Z`],
