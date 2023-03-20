@@ -33,6 +33,12 @@ shippingService:
 cartDatabase:
   create: true
 
+ingressGke:
+  create: false
+
+ingressHaproxy:
+  create: false
+
 sidecars:
   istio: false
   linkerd: false
