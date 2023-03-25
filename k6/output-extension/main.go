@@ -1,10 +1,13 @@
 package log
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"math"
 	"os"
+	"os/exec"
 	"sort"
 	"strconv"
 	"strings"
@@ -20,6 +23,24 @@ var requests int = 0
 var startTime time.Time
 var stopTime time.Time
 var latencies []float64
+var kubectl Kubectl
+
+type Kubectl struct {
+	ClientVersion    Version
+	KustomizeVersion string
+}
+
+type Version struct {
+	Major        string
+	Minor        string
+	GitVersion   string
+	GitCommit    string
+	GitTreeState string
+	BuildDate    string
+	GoVersion    string
+	Compiler     string
+	Platform     string
+}
 
 type LatencyStruct struct {
 	Min     float64 `yaml:"min"`
@@ -51,19 +72,9 @@ type ServiceMeshPerformance struct {
 	Metrics        map[string]string `yaml:"metrics"`
 }
 
-// init is called by the Go runtime at application startup.
-func init() {
-	output.RegisterExtension("smp", New)
-}
-
 // Logger writes k6 metric samples to stdout.
 type Logger struct {
 	out io.Writer
-}
-
-// New returns a new instance of Logger.
-func New(params output.Params) (output.Output, error) {
-	return &Logger{params.StdOut}, nil
 }
 
 // Description returns a short human-readable description of the output.
@@ -88,6 +99,19 @@ func (l *Logger) AddMetricSamples(samples []metrics.SampleContainer) {
 	}
 }
 
+// Stop finalizes any tasks in progress, closes network connections, etc.
+func (*Logger) Stop() error {
+	stopTime = time.Now()
+	duration := stopTime.Sub(startTime)
+	createYamlFile(duration)
+	return nil
+}
+
+// init is called by the Go runtime at application startup.
+func init() {
+	output.RegisterExtension("smp", new)
+}
+
 // metricKeyValues returns a string of key-value pairs for all metrics in the sample.
 func metricKeyValues(samples []metrics.Sample) string {
 	names := make([]string, 0, len(samples))
@@ -103,15 +127,25 @@ func metricKeyValues(samples []metrics.Sample) string {
 	return strings.Join(names, ", ")
 }
 
-// Stop finalizes any tasks in progress, closes network connections, etc.
-func (*Logger) Stop() error {
-	stopTime = time.Now()
-	duration := stopTime.Sub(startTime)
-	CreateYamlFile(duration)
-	return nil
+// New returns a new instance of Logger.
+func new(params output.Params) (output.Output, error) {
+	return &Logger{params.StdOut}, nil
 }
 
-func LatenciesInMilliseconds(p90Indexlatencies []float64) (min float64, max float64, average float64, p50 float64, p90 float64, p99 float64) {
+func kubectlVersion() string {
+
+	out, err := exec.Command("kubectl", "version", "--output=json").Output()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.Unmarshal(out, &kubectl)
+
+	return kubectl.ClientVersion.GitVersion
+}
+
+func latenciesInMilliseconds(p90Indexlatencies []float64) (min float64, max float64, average float64, p50 float64, p90 float64, p99 float64) {
 	min = latencies[0]
 	max = latencies[0]
 	sum := 0.0
@@ -141,12 +175,12 @@ func LatenciesInMilliseconds(p90Indexlatencies []float64) (min float64, max floa
 	return min, max, sum / (float64)(len(latencies)), latencies[int(p50Index)], latencies[int(p90Index)], latencies[int(p99Index)]
 }
 
-func CreateYamlFile(duration time.Duration) {
+func createYamlFile(duration time.Duration) {
 
 	id := uuid.New()
 	requestsPerSeconds := float64(requests) / duration.Seconds()
 
-	min, max, average, p50, p90, p99 := LatenciesInMilliseconds(latencies)
+	min, max, average, p50, p90, p99 := latenciesInMilliseconds(latencies)
 
 	smp := ServiceMeshPerformance{
 		Start_time:     startTime,
@@ -155,7 +189,7 @@ func CreateYamlFile(duration time.Duration) {
 		Endpoint_url:   "http://localhost:8080",
 		Load_generator: "k6",
 		Env: EnvStruct{
-			Kubernetes: "v1.25.2",
+			Kubernetes: kubectlVersion(),
 		},
 		Client: ClientStruct{
 			Connections: 1,
@@ -178,7 +212,7 @@ func CreateYamlFile(duration time.Duration) {
 		fmt.Printf("Error while Marshaling. %v", err)
 	}
 
-	fileName := createFileName()
+	fileName := createFileNameAsIso8601()
 	err = os.WriteFile(fileName, yamlData, 0644)
 	if err != nil {
 		panic("Unable to write data into the file")
@@ -186,15 +220,19 @@ func CreateYamlFile(duration time.Duration) {
 
 }
 
-func createFileName() string {
+func createFileNameAsIso8601() string {
 	now := time.Now()
 
-	year := strconv.Itoa(now.Year())
-	month := strconv.Itoa(int(now.Month()))
 	day := strconv.Itoa(now.Day())
-	hour := strconv.Itoa(now.Hour())
-	minute := strconv.Itoa(now.Minute())
-	second := strconv.Itoa(now.Second())
+	month := strconv.Itoa(int(now.Month()))
 
-	return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second + ".yaml"
+	if len(day) == 1 {
+		day = "0" + day
+	}
+
+	if len(month) == 1 {
+		month = "0" + month
+	}
+
+	return strconv.Itoa(now.Year()) + "-" + month + "-" + day + "T" + strconv.Itoa(now.Hour()) + ":" + strconv.Itoa(now.Minute()) + ":" + strconv.Itoa(now.Second()) + "+01:00.yaml"
 }
